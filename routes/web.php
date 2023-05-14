@@ -17,13 +17,10 @@ use App\Http\Controllers\HomeController;
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 // 2fa middleware
 Route::middleware(['2fa'])->group(function () {
-
-    // HomeController
-    Route::get('/home', [HomeController::class, 'index'])->name('home');
+    Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
     Route::post('/2fa', function () {
         return redirect(route('home'));
