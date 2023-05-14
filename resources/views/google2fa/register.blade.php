@@ -12,6 +12,8 @@
                         <div>
                             <img src="{{ $QR_Image }}">
                         </div>
+
+                        {{ $QR_Image }}
                         <p>You must set up your Google Authenticator app before continuing. You will be unable to login otherwise</p>
                         <div>
                             <a href="{{ route('complete.registration') }}" class="btn btn-primary">Complete Registration</a>
