@@ -12,8 +12,8 @@
         "laravel/sanctum": "^3.0",
         "laravel/tinker": "^2.7",
         "laravel/ui": "^4.2",
-        "pragmarx/google2fa": "^8.0",
-        "pragmarx/google2fa-laravel": "^2.1"
+        "pragmarx/google2fa-laravel": "^2.1",
+      "ext-dom": "*"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
