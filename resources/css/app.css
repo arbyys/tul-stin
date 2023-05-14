@@ -1,0 +1,29 @@
+:root {
+    --primary: #0065c4;
+    --primary-transparent: rgba(0,101,196,0.08);
+}
+
+.primary-colored-header{
+    color: var(--primary);
+    font-size: 1.25rem;
+}
+
+.action-item{
+    transition: background-color 0.2s;
+}
+
+.action-item:hover{
+    background-color: var(--primary-transparent);
+}
+
+.ml-spacing {
+    margin-left: 2.5rem!important;
+}
+
+.nav-item{
+    margin-left: 0.5rem;
+}
+
+.active-item{
+    color: var(--primary)
+}

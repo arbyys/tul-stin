@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\AccountController;
+use App\Http\Controllers\HistoryController;
+use App\Http\Controllers\PaymentController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\HomeController;
@@ -17,10 +20,13 @@ use App\Http\Controllers\HomeController;
 
 Auth::routes();
 
-
 // 2fa middleware
 Route::middleware(['2fa'])->group(function () {
-    Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::get('/', [HomeController::class, 'index'])->name('home');
+    Route::get('/accounts', [AccountController::class, 'index'])->name('accounts');
+    Route::get('/history', [HistoryController::class, 'index'])->name('history');
+    Route::get('/incoming-payment', [PaymentController::class, 'indexIncoming'])->name('incoming-payment');
+    Route::get('/outcoming-payment', [PaymentController::class, 'indexOutcoming'])->name('outcoming-payment');
 
     Route::post('/2fa', function () {
         return redirect(route('home'));
