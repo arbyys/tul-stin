@@ -57,4 +57,16 @@
 <hr class="mt-5 mb-5">
 
 <h3>Bankovní účty</h3>
+
+<ul class="list-group">
+    @forelse($accounts as $account)
+        <li class="list-group-item d-flex justify-content-between">
+            <span>
+                Účet č. <b>{{ $account->iban }}</b> s měnou {{ $account->currency_code }} a zůstatkem {{ $account->balance }},-
+            </span>
+        </li>
+    @empty
+        Nemáte vytvořený žádný bankovní účet
+    @endforelse
+</ul>
 @endsection
