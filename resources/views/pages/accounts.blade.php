@@ -3,7 +3,7 @@
 @section('title', 'správa účtů')
 
 @section('content')
-    <h2>Nový bankovní účet</h2>
+    <h3>Nový bankovní účet</h3>
     <hr>
     <form class="w-md-50" method="POST" action="{{ route('create_account') }}">
         @csrf
@@ -19,4 +19,24 @@
     </form>
 
     <hr>
+    <h3>Vaše účty</h3>
+
+    <ul class="list-group">
+    @forelse($accounts as $account)
+        <li class="list-group-item d-flex justify-content-between">
+            <span>
+                Účet č. <b>{{ $account->iban }}</b> s měnou {{ $account->currency_code }} a zůstatkem {{ $account->balance }},-
+            </span>
+            <div>
+                <form method="post" action="{{ route('remove_account') }}">
+                    @csrf
+                    <input type="hidden" name="iban" value="{{ $account->iban }}">
+                    <button type="submit" class="btn btn-danger">Smazat</button>
+                </form>
+            </div>
+        </li>
+    @empty
+        Nemáte vytvořený žádný bankovní účet
+    @endforelse
+    </ul>
 @endsection
