@@ -1,6 +1,8 @@
 :root {
     --primary: #0065c4;
     --primary-transparent: rgba(0,101,196,0.08);
+    --secondary: #8698CD;
+    --contrast: #ebb826;
 }
 
 .primary-colored-header{

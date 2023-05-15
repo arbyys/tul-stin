@@ -3,7 +3,6 @@
 @section('title', 'správa účtů')
 
 @section('content')
-    <div class="container">
-        accounts
-    </div>
+    <button type="button" class="btn btn-primary">Primary</button>
+    <button type="button" class="btn btn-info">Info</button>
 @endsection
