@@ -98,7 +98,30 @@
         </nav>
 
         <main class="py-4">
-            @yield('content')
+            <div class="container">
+                @if(session()->has('errors'))
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <ul>
+                            @foreach($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                @endif
+
+                @if(session()->has('success'))
+                    <div class="alert alert-success alert-dismissible fade show">
+                        {{ session('success') }}
+
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+
+                @endif
+
+                @yield('content')
+            </div>
         </main>
     </div>
 </body>
