@@ -3,7 +3,5 @@
 @section('title', 'odchozí platba')
 
 @section('content')
-<div class="container">
-    outcoming payment
-</div>
+outcoming payment
 @endsection

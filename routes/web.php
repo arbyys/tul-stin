@@ -24,6 +24,9 @@ Auth::routes();
 Route::middleware(['2fa'])->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('home');
     Route::get('/accounts', [AccountController::class, 'index'])->name('accounts');
+    Route::post('/accounts/create', [AccountController::class, 'create'])->name('create_account');
+    Route::post('/accounts/remove', [AccountController::class, 'remove'])->name('remove_account');
+
     Route::get('/history', [HistoryController::class, 'index'])->name('history');
     Route::get('/incoming-payment', [PaymentController::class, 'indexIncoming'])->name('incoming-payment');
     Route::get('/outcoming-payment', [PaymentController::class, 'indexOutcoming'])->name('outcoming-payment');

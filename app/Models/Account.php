@@ -19,4 +19,9 @@ class Account extends Model
             $account->iban = Str::random(10);
         });
     }
+
+    protected $fillable = [
+        'user_id',
+        'currency_code'
+    ];
 }

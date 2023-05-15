@@ -3,7 +3,5 @@
 @section('title', 'historie plateb')
 
 @section('content')
-    <div class="container">
-        historie
-    </div>
+    historie
 @endsection
