@@ -12,4 +12,11 @@ class Currency extends Model
     public $incrementing = false;
     protected $primaryKey = 'code';
     protected $keyType = 'string';
+
+    protected $fillable = [
+        'country',
+        'name',
+        'code',
+        'rate'
+    ];
 }
