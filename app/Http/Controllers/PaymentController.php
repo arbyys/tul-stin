@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Account;
 use App\Models\Currency;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -40,10 +41,63 @@ class PaymentController extends Controller
             'currency' => 'required|exists:currencies,code',
         ]);
 
-        dd($validatedData);
+        $currency = $validatedData["currency"];
+        $amount = $validatedData["amount"];
 
-        return redirect()->back()->with([
-            "success" => "Platba úspěšně zpracována"
-        ]);
+        if (Auth::user()->hasAccountAndEnoughMoney($currency, $amount))
+        {
+            $account = Account::where("user_id", Auth::id())
+                    ->where("currency_code", $currency)
+                    ->first();
+            $result = $account->makePayment(-$amount);
+            if ($result)
+            {
+                return redirect()->back()->with([
+                    "success" => "Platba úspěšně zpracována v měně {$currency}"
+                ]);
+            }
+            else
+            {
+                return redirect()->back()->withErrors([
+                    "msg" => "Při platbě se vyskytla neznámá chyba."
+                ]);
+            }
+        }
+        else
+        {
+            if ($currency == "CZK")
+            {
+                return redirect()->back()->withErrors([
+                    "msg" => "Na vašem CZK účtu nemáte dost prostředků."
+                ]);
+            }
+
+            $convertedAmount = Currency::convertToCZK($currency, $amount);
+            if (!is_null($convertedAmount) && Auth::user()->hasAccountAndEnoughMoney("CZK", $convertedAmount))
+            {
+                $account = Account::where("user_id", Auth::id())
+                    ->where("currency_code", "CZK")
+                    ->first();
+                $result = $account->makePayment(-$convertedAmount);
+                if ($result)
+                {
+                    return redirect()->back()->with([
+                        "success" => "Na vašem účtě s měnou {$currency} není dost prostředků. Platba byla provedena na váš účet s CZK pomocí převodu."
+                    ]);
+                }
+                else
+                {
+                    return redirect()->back()->withErrors([
+                        "msg" => "Při platbě se vyskytla neznámá chyba."
+                    ]);
+                }
+            }
+            else
+            {
+                return redirect()->back()->withErrors([
+                    "msg" => "Na vašem účtu s měnou {$currency} ani CZK po převodu měny nemáte dost prostředků."
+                ]);
+            }
+        }
     }
 }

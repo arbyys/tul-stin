@@ -57,4 +57,12 @@ class User extends Authenticatable
             set: fn ($value) =>  encrypt($value),
         );
     }
+
+    public function hasAccountAndEnoughMoney($currencyCode, $amount): bool
+    {
+        return Account::where("user_id", $this->id)
+                      ->where("currency_code", $currencyCode)
+                      ->where("balance", ">=", $amount)
+                      ->count() == 1;
+    }
 }

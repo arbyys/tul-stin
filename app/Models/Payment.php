@@ -11,6 +11,11 @@ class Payment extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'account_iban',
+        'amount',
+    ];
+
     public function account(): HasOne
     {
         return $this->hasOne(Account::class);

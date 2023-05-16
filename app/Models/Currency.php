@@ -19,4 +19,14 @@ class Currency extends Model
         'code',
         'rate'
     ];
+
+    public static function convertToCZK($currency, $amount) {
+        $currencyModel = self::where('code', $currency)->first();
+        if ($currencyModel && $currency != "CZK")
+        {
+            return $amount * $currency->rate;
+        }
+
+        return null;
+    }
 }

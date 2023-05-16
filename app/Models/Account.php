@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
 class Account extends Model
@@ -24,4 +25,20 @@ class Account extends Model
         'user_id',
         'currency_code'
     ];
+
+    public function payments()
+    {
+        return $this->hasMany(Payment::class, 'account_iban', 'iban');
+    }
+
+    public function makePayment($amount) {
+        $result = self::increment('balance', $amount);
+
+        $payment = new Payment();
+        $payment->fill([
+            'account_iban' => $this->iban,
+            'amount' => $amount,
+        ]);
+        return $result && $payment->save();
+    }
 }
