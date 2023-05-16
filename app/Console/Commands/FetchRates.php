@@ -31,7 +31,7 @@ class FetchRates extends Command
     {
         try {
             $this->info("Starting currency fetch.");
-            CurrencyService::updateExchangeRates();
+            CurrencyService::updateExchangeRates(true);
             $this->info("Currency fetch done!");
         }
         catch(Exception $e) {

@@ -22,4 +22,29 @@
             <button type="submit" class="btn btn-primary">Potvrdit</button>
         </form>
     </div>
+    <hr>
+    <h3 class="mb-3">Aktuální kurzovní lístek</h3>
+    <table class="table responsive-50">
+        <thead>
+        <tr>
+            <th scope="col">Stát</th>
+            <th scope="col">Měna</th>
+            <th scope="col">Zkratka</th>
+            <th scope="col">Kurz</th>
+        </tr>
+        </thead>
+        <tbody>
+        @forelse($currencies as $currency)
+            <tr>
+                <td>{{ $currency->country }}</td>
+                <td>{{ $currency->name }}</td>
+                <td>{{ $currency->code }}</td>
+                <td>{{ $currency->rate }}</td>
+            </tr>
+        @empty
+            Nejsou dostupné žádné kurzy
+        @endforelse
+
+        </tbody>
+    </table>
 @endsection
