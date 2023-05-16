@@ -37,7 +37,7 @@ class PaymentController extends Controller
     }
     public function newOutcomingPayment(Request $request) {
         $validatedData = $request->validate([
-            'amount' => 'required|integer|min:0',
+            'amount' => 'required|integer|min:1',
             'currency' => 'required|exists:currencies,code',
         ]);
 

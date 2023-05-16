@@ -9,7 +9,7 @@
             @csrf
             <div class="mb-3">
                 <label for="amount" class="form-label">Částka</label>
-                <input type="number" min="0" name="amount" required class="form-control" placeholder="Zadejte částku" id="amount">
+                <input type="number" min="1" name="amount" required class="form-control" placeholder="Zadejte částku" id="amount">
             </div>
             <div class="mb-3">
                 <label for="currency" class="form-label">Měna platby</label>
