@@ -65,4 +65,11 @@ class User extends Authenticatable
                       ->where("balance", ">=", $amount)
                       ->count() == 1;
     }
+
+    public function hasAccount($currencyCode): bool
+    {
+        return Account::where("user_id", $this->id)
+                ->where("currency_code", $currencyCode)
+                ->count() == 1;
+    }
 }

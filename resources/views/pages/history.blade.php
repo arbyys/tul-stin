@@ -21,7 +21,7 @@
                     <ul class="list-group">
                         @forelse($payments as $payment)
                             <li class="list-group-item @if($payment->amount < 0) payment-outcoming @else payment-incoming @endif">
-                                <span class="payment-big">{{ $payment->amount }} {{ $account->currency_code }}</span> <br>
+                                <span class="payment-big">@if($payment->amount > 0) +@endif{{ $payment->amount }}{{ $account->currency_code }}</span> <br>
                                 {{ date_format(date_create($payment->created_at),"d.m.Y, H:i") }}
                             </li>
                         @empty

@@ -33,7 +33,56 @@ class PaymentController extends Controller
     }
 
     public function newIncomingPayment(Request $request) {
-        dd($request->all());
+        $validatedData = $request->validate([
+            'amount' => 'required|integer|min:1',
+            'currency' => 'required|exists:currencies,code',
+        ]);
+
+        $currency = $validatedData["currency"];
+        $amount = $validatedData["amount"];
+
+        if (Auth::user()->hasAccount($currency))
+        {
+            $account = Account::where("user_id", Auth::id())
+                ->where("currency_code", $currency)
+                ->first();
+            $result = $account->makePayment($amount);
+
+            if ($result)
+            {
+                return redirect()->back()->with([
+                    "success" => "Platba úspěšně zpracována v měně {$currency}"
+                ]);
+            }
+            else
+            {
+                return redirect()->back()->withErrors([
+                    "msg" => "Při platbě se vyskytla neznámá chyba."
+                ]);
+            }
+        }
+        else
+        {
+            $convertedAmount = Currency::convertToCZK($currency, $amount);
+
+            $account = Account::where("user_id", Auth::id())
+                ->where("currency_code", "CZK")
+                ->first();
+            $result = $account->makePayment($convertedAmount);
+            if ($result)
+            {
+                return redirect()->back()->with([
+                    "success" => "Nemáte účet s měnou {$currency}. Částa byla konvertována a platba bylo přičtena na váš účet s měnou CZK."
+                ]);
+            }
+            else
+            {
+                return redirect()->back()->withErrors([
+                    "msg" => "Při platbě se vyskytla neznámá chyba."
+                ]);
+            }
+        }
+
     }
     public function newOutcomingPayment(Request $request) {
         $validatedData = $request->validate([
