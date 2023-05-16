@@ -22,7 +22,7 @@ class HistoryController extends Controller
         foreach ($accounts as $account) {
             $accountPayments[$account->iban] = [
                 'account' => $account,
-                'payments' => $account->payments()->get(),
+                'payments' => $account->payments()->orderByDesc('created_at')->get(),
             ];
         }
 
