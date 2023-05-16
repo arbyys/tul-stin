@@ -32,8 +32,8 @@
     - framework Laravel, verze 9
     - PHP verze 8.0
 - frontend
-    - JavaScript pro requesty na backend pomocí metody fetch
-    - framework Alpine.js pro jednoduchou frontend logiku
+    - Bootstrap spouštěn pomocí Vite
+    - JavaScript pro jednoduchou logiku
 - databáze
     - mysql
     - ukládání uživatelů + historie plateb

@@ -39,3 +39,16 @@
         width: 100%;
     }
 }
+
+.payment-outcoming{
+    background-color: #ffdede;
+}
+
+.payment-incoming{
+    background-color: #e0ffde;
+}
+
+.payment-big{
+    font-size: 1.4rem;
+    font-weight: bold;
+}
