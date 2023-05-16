@@ -41,6 +41,13 @@ class PaymentController extends Controller
         $currency = $validatedData["currency"];
         $amount = $validatedData["amount"];
 
+        if (!Auth::user()->hasAccount("CZK"))
+        {
+            return redirect()->back()->withErrors([
+                "msg" => "Nemáte bankovní účet s CZK. Bez jeho založení nelze provádět platby."
+            ]);
+        }
+
         if (Auth::user()->hasAccount($currency))
         {
             $account = Account::where("user_id", Auth::id())
@@ -92,6 +99,13 @@ class PaymentController extends Controller
 
         $currency = $validatedData["currency"];
         $amount = $validatedData["amount"];
+
+        if (!Auth::user()->hasAccount("CZK"))
+        {
+            return redirect()->back()->withErrors([
+                "msg" => "Nemáte bankovní účet s CZK. Bez jeho založení nelze provádět platby."
+            ]);
+        }
 
         if (Auth::user()->hasAccountAndEnoughMoney($currency, $amount))
         {
