@@ -35,6 +35,15 @@ class PaymentController extends Controller
         dd($request->all());
     }
     public function newOutcomingPayment(Request $request) {
-        dd($request->all());
+        $validatedData = $request->validate([
+            'amount' => 'required|integer|min:0',
+            'currency' => 'required|exists:currencies,code',
+        ]);
+
+        dd($validatedData);
+
+        return redirect()->back()->with([
+            "success" => "Platba úspěšně zpracována"
+        ]);
     }
 }

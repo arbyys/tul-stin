@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'přihlášení')
+
 @section('content')
     <div class="container">
         <div class="row justify-content-center align-items-center " style="height: 70vh;">

@@ -14,12 +14,11 @@ class HistoryController extends Controller
 
     public function index()
     {
-        //$accounts = Account::all();
         $accounts = Account::leftJoin('payments', 'accounts.iban', '=', 'payments.account_iban')
             ->select('accounts.*', 'payments.amount', 'payments.created_at')
             ->get()
             ->groupBy('iban');
-        //dd($accounts);
+
         return view('pages.history', [
             "accounts" => $accounts
         ]);
