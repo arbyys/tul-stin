@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Account;
 use Illuminate\Http\Request;
 
 class HistoryController extends Controller
@@ -13,6 +14,14 @@ class HistoryController extends Controller
 
     public function index()
     {
-        return view('pages.history');
+        //$accounts = Account::all();
+        $accounts = Account::leftJoin('payments', 'accounts.iban', '=', 'payments.account_iban')
+            ->select('accounts.*', 'payments.amount', 'payments.created_at')
+            ->get()
+            ->groupBy('iban');
+        //dd($accounts);
+        return view('pages.history', [
+            "accounts" => $accounts
+        ]);
     }
 }
