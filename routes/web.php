@@ -30,6 +30,9 @@ Route::middleware(['2fa'])->group(function () {
     Route::get('/history', [HistoryController::class, 'index'])->name('history');
     Route::get('/incoming-payment', [PaymentController::class, 'indexIncoming'])->name('incoming-payment');
     Route::get('/outcoming-payment', [PaymentController::class, 'indexOutcoming'])->name('outcoming-payment');
+    Route::get('/incoming-payment/new', [PaymentController::class, 'newIncomingPayment'])->name('new_incoming_payment');
+    Route::get('/outcoming-payment/new', [PaymentController::class, 'newOutcomingPayment'])->name('new_outcoming_payment');
+
 
     Route::post('/2fa', function () {
         return redirect(route('home'));

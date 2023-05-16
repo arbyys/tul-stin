@@ -3,5 +3,7 @@
 @section('title', 'odchozí platba')
 
 @section('content')
-outcoming payment
+    <form action="{{ route('new_outcoming_payment') }}" method="POST">
+        @csrf
+    </form>
 @endsection
