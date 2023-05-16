@@ -82,7 +82,7 @@ class PaymentController extends Controller
                 if ($result)
                 {
                     return redirect()->back()->with([
-                        "success" => "Na vašem účtě s měnou {$currency} není dost prostředků. Platba byla provedena na váš účet s CZK pomocí převodu."
+                        "success" => "Váš účet s měnou {$currency} neexistuje / nemá dost prostředků. Částa byla konvertována a platba bylo provedna z vašeho účet s měnou CZK."
                     ]);
                 }
                 else
