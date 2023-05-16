@@ -144,7 +144,7 @@ class PaymentController extends Controller
             else
             {
                 return redirect()->back()->withErrors([
-                    "msg" => "Na vašem účtu s měnou {$currency} ani CZK po převodu měny nemáte dost prostředků."
+                    "msg" => "Váš účet s měnou {$currency} neexistuje / nemá dost prostředků. Váš CZK účet také neobsahuje dostatek prostředků, aby mohla být částka po konverzi strhnuta z něj."
                 ]);
             }
         }
