@@ -3,22 +3,23 @@
 @section('title', 'příchozí platba')
 
 @section('content')
-    <form action="{{ route('new_incoming_payment') }}" method="POST">
-        @csrf
-
-        <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">Email address</label>
-            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-            <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
-        </div>
-        <div class="mb-3">
-            <label for="exampleInputPassword1" class="form-label">Password</label>
-            <input type="password" class="form-control" id="exampleInputPassword1">
-        </div>
-        <div class="mb-3 form-check">
-            <input type="checkbox" class="form-check-input" id="exampleCheck1">
-            <label class="form-check-label" for="exampleCheck1">Check me out</label>
-        </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
+    <h3 class="mb-3">Příchozí platba</h3>
+    <div class="responsive-50">
+        <form action="{{ route('new_incoming_payment') }}" method="POST">
+            @csrf
+            <div class="mb-3">
+                <label for="amount" class="form-label">Částka</label>
+                <input type="number" required class="form-control" placeholder="Zadejte částku" id="amount">
+            </div>
+            <div class="mb-3">
+                <label for="currency" class="form-label">Měna platby</label>
+                <select id="currency" name="currency" required class="form-select">
+                    @foreach($currencies as $currency)
+                        <option @if($loop->first)selected @endif" value="{{ $currency->code }}">{{ $currency->code }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Potvrdit</button>
+        </form>
+    </div>
 @endsection

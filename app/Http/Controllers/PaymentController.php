@@ -30,4 +30,11 @@ class PaymentController extends Controller
             "currencies" => $currencies,
         ]);
     }
+
+    public function newIncomingPayment(Request $request) {
+        dd($request->all());
+    }
+    public function newOutcomingPayment(Request $request) {
+        dd($request->all());
+    }
 }
