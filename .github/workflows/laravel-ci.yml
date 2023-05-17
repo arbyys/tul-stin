@@ -36,9 +36,6 @@ jobs:
       - name: Generate application key
         run: php artisan key:generate
 
-      - name: Run migrations
-        run: php artisan migrate --force
-
       - name: Run npm
         run: npm run dev
 
