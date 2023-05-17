@@ -23,8 +23,8 @@ jobs:
 
       - name: Install Xdebug
         run: |
-          apt-get install php8.0-xdebug
-          docker-php-ext-enable xdebug
+          apt-get install php-pear
+          pecl install xdebug
 
       - name: Install dependencies
         run: |
