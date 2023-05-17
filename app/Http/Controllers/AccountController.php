@@ -28,13 +28,12 @@ class AccountController extends Controller
 
     public function create(Request $request)
     {
-        /*$validatedData = $request->validate([
+        $validatedData = $request->validate([
             'currency' => 'required|exists:currencies,code',
         ]);
 
         $currency = $validatedData["currency"];
-        */
-        $currency = $request->currency;
+
         $czechAccountExists = Account::where("user_id", Auth::id())->where("currency_code", "CZK")->count() >= 1;
         if (!$czechAccountExists && $currency != "CZK") {
             return redirect()->back()->withErrors([

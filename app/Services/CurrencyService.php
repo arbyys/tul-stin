@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\Currency;
 use Exception;
 use GuzzleHttp\Exception\GuzzleException;
+use Illuminate\Support\Facades\Http;
 use League\Csv\Reader;
 use GuzzleHttp\Client;
 use Carbon\Carbon;
@@ -40,9 +41,9 @@ class CurrencyService
         if ($bypassDates || ($isOlderThanCached && $isWeekday && $isAfterReleaseDate)) {
             $apiUrl = env('API_URL');
 
-            $client = new Client();
-            $response = $client->get($apiUrl);
-            $csvContent = $response->getBody()->getContents();
+            $response = Http::get($apiUrl);
+
+            $csvContent = $response->body();
 
             $reader = Reader::createFromString($csvContent);
 
