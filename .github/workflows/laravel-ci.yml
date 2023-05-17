@@ -2,7 +2,8 @@ name: Laravel CI/CD
 
 on:
   push:
-
+    branches:
+      - master
 
 jobs:
   test:
@@ -74,4 +75,4 @@ jobs:
             git pull origin master
             composer install --no-interaction --no-ansi --no-progress --no-scripts --no-suggest
             php artisan migrate
-            npm build
+            npm run build
