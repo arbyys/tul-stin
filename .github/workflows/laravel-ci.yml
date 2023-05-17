@@ -63,11 +63,16 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Set up SSH connection
-        uses: webfactory/ssh-agent@v0.5.0
+      - name: Deploy using ssh
+        uses: appleboy/ssh-action@master
         with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-
-      - name: Deploy to VPS
-        run: |
-          ssh root@194.182.91.223 'cd /var/www/html/stin_bank && git pull && composer install --no-interaction --no-ansi --no-progress --no-scripts --no-suggest && php artisan migrate'
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: 22
+          script: |
+            cd /var/www/html/stin_bank
+            git pull origin master
+            composer install --no-interaction --no-ansi --no-progress --no-scripts --no-suggest
+            php artisan migrate
+            npm run build
