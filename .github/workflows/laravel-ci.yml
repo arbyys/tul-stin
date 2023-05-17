@@ -21,11 +21,10 @@ jobs:
         with:
           fetch-depth: 1
 
-      - name: Install Xdebug
+      - name: Install additional PHP extensions
         run: |
-          apt-get -y update
-          apt-get -y install php-pear php8.0-dev
-          pecl install xdebug
+          apt-get update
+          apt-get install -y php-pcov
 
       - name: Install dependencies
         run: |
