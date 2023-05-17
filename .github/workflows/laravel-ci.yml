@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - master
-      - feature/ci_cd
 
 jobs:
   test:
@@ -58,18 +57,17 @@ jobs:
 
   deploy:
     needs: test
-    if: startsWith(github.ref, 'refs/tags/deploy-')
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Set up SSH
+      - name: Set up SSH connection
         uses: webfactory/ssh-agent@v0.5.0
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
       - name: Deploy to VPS
         run: |
-          ssh <username>@<VPS-IP-Address> 'cd /path/to/your/app && git pull && composer install --no-interaction --no-ansi --no-progress --no-scripts --no-suggest && php artisan migrate --force && php artisan optimize'
+          ssh root@194.182.91.223 'cd /var/www/html/stin_bank && git pull && composer install --no-interaction --no-ansi --no-progress --no-scripts --no-suggest && php artisan migrate'
