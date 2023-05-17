@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - master
-      - feature/ci_cd
 
 jobs:
   test:
@@ -58,7 +57,6 @@ jobs:
 
   deploy:
     needs: test
-    if: startsWith(github.ref, 'refs/tags/deploy-')
     runs-on: ubuntu-latest
 
     steps:
