@@ -51,7 +51,9 @@ jobs:
         env:
           DB_CONNECTION: sqlite
           DB_DATABASE: database/database.sqlite
-        run: vendor/bin/phpunit
+        run: |
+          php artisan migrate:fresh --seed --force
+          vendor/bin/phpunit
 
   deploy:
     needs: test
