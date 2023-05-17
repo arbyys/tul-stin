@@ -5,6 +5,7 @@ namespace Tests;
 use App\Models\Currency;
 use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use Illuminate\Support\Facades\Auth;
@@ -14,7 +15,7 @@ abstract class TestCase extends BaseTestCase
 {
     use CreatesApplication;
     use DatabaseMigrations;
-    use RefreshDatabase;
+    use LazilyRefreshDatabase;
 
     protected function setUp(): void
     {
