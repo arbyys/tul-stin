@@ -7,12 +7,13 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title> {{ config('app.name', 'RaiffeiSTIN Bank') }} - @yield('title')</title>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
 
+    <script src="https://kit.fontawesome.com/28adba2780.js" crossorigin="anonymous"></script>
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
@@ -21,7 +22,7 @@
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
+                    {{ config('app.name', 'RaiffeiSTIN Bank') }}
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -39,17 +40,41 @@
                         @guest
                             @if (Route::has('login'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Přihlásit se') }}</a>
                                 </li>
                             @endif
 
                             @if (Route::has('register'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Registrovat') }}</a>
                                 </li>
                             @endif
                         @else
-                            <li class="nav-item dropdown">
+                            @php($currentRoute = Route::current()->getName())
+
+                            @if ($currentRoute != "home")
+                                <li class="nav-item">
+                                    <a class="nav-link @if($currentRoute == "accounts") active-item @endif" href="{{ route('accounts') }}">
+                                        Správa účtů
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link @if($currentRoute == "history") active-item @endif" href="{{ route('history') }}">
+                                        Historie plateb
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link @if($currentRoute == "outcoming-payment") active-item @endif" href="{{ route('outcoming-payment') }}">
+                                        Zaplatit z účtu
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link @if($currentRoute == "incoming-payment") active-item @endif" href="{{ route('incoming-payment') }}">
+                                        Přijmout platbu
+                                    </a>
+                                </li>
+                            @endif
+                            <li class="nav-item dropdown ml-spacing">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }}
                                 </a>
@@ -58,7 +83,7 @@
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
+                                        {{ __('Odhlásit se') }}
                                     </a>
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
@@ -73,7 +98,30 @@
         </nav>
 
         <main class="py-4">
-            @yield('content')
+            <div class="container">
+                @if(session()->has('errors'))
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <ul>
+                            @foreach($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                @endif
+
+                @if(session()->has('success'))
+                    <div class="alert alert-success alert-dismissible fade show">
+                        {{ session('success') }}
+
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+
+                @endif
+
+                @yield('content')
+            </div>
         </main>
     </div>
 </body>
