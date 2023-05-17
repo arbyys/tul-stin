@@ -21,9 +21,13 @@ jobs:
         with:
           fetch-depth: 1
 
-      - name: Install composer dependencies
+      - name: Install dependencies
         run: |
-          composer install --no-scripts
+          composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+          npm install
+
+      - name: Run npm
+        run: npm run build
 
       - name: Prepare Laravel Application
         run: |
