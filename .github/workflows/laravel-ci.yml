@@ -23,8 +23,8 @@ jobs:
 
       - name: Install Xdebug
         run: |
-          apt-get install php-pear
-          apt-get install php8.0-dev
+          apt-get -y install php-pear
+          apt-get -y install php8.0-dev
           pecl install xdebug
 
       - name: Install dependencies
