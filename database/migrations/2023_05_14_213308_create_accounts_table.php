@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('iban', 10)->primary();
             $table->foreignId('user_id')->constrained();
             $table->string('currency_code', 3)->references('code')->on('currencies');
-            $table->integer('balance')->default(0);
+            $table->float('balance')->default(0);
             $table->timestamps();
         });
     }

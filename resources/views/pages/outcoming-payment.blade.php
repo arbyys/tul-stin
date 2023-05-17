@@ -24,7 +24,7 @@
     </div>
     <hr>
     <h3 class="mb-3">Aktuální kurzovní lístek</h3>
-    <table class="table responsive-50">
+    <table class="table responsive-50 table-secondary table-striped">
         <thead>
         <tr>
             <th scope="col">Stát</th>

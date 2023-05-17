@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
             $table->string('account_iban', 10)->references('iban')->on('accounts');
-            $table->integer("amount");
+            $table->float("amount");
             $table->timestamps();
         });
     }
