@@ -72,4 +72,4 @@ jobs:
 
       - name: Deploy to VPS
         run: |
-          ssh <username>@<VPS-IP-Address> 'cd /path/to/your/app && git pull && composer install --no-interaction --no-ansi --no-progress --no-scripts --no-suggest && php artisan migrate --force && php artisan optimize'
+          ssh root@194.182.91.223 'cd /var/www/html/stin_bank && git pull && composer install --no-interaction --no-ansi --no-progress --no-scripts --no-suggest && php artisan migrate'
