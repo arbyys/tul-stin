@@ -31,7 +31,15 @@ jobs:
       - name: Generate application key
         run: php artisan key:generate
 
+      - name: Create Database
+        run: |
+          mkdir -p database
+          touch database/database.sqlite
+
       - name: Run tests
+        env:
+          DB_CONNECTION: sqlite
+          DB_DATABASE: database/database.sqlite
         run: php artisan test
 
   deploy:
