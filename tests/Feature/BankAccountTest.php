@@ -8,7 +8,6 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use PragmaRX\Google2FAQRCode\Google2FA;
-use Tests\Helpers\FakeGoogle2FA;
 use Tests\TestCase;
 
 class BankAccountTest extends TestCase
