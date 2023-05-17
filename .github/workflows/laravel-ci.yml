@@ -2,8 +2,7 @@ name: Laravel CI/CD
 
 on:
   push:
-    branches:
-      - master
+
 
 jobs:
   test:
@@ -62,6 +61,9 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
+
+      - name: Update known_hosts
+        run: echo "${{ secrets.SSH_KNOWN_HOSTS }}" > ~/.ssh/known_hosts
 
       - name: Set up SSH connection
         uses: webfactory/ssh-agent@v0.5.0
