@@ -23,7 +23,7 @@ jobs:
 
       - name: Install Xdebug
         run: |
-          sudo apt-get install php8.0-xdebug
+          apt-get install php8.0-xdebug
           docker-php-ext-enable xdebug
 
       - name: Install dependencies
