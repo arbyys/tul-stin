@@ -39,7 +39,7 @@ jobs:
         run: php artisan key:generate
 
       - name: Run npm
-        run: npm run production
+        run: npm run build
 
       - name: Run tests
         env:
