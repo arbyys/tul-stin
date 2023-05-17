@@ -23,8 +23,9 @@ jobs:
         run: php -r "file_exists('.env') || copy('.env.example', '.env');"
 
       - name: Install dependencies
-        run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
-             npm install
+        run: |
+           composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+           npm install
 
       - name: Directory Permissions
         run: chmod -R 777 storage bootstrap/cache
