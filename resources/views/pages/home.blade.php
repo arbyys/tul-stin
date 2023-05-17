@@ -11,7 +11,7 @@
             </div>
             <div class="card-body text-center">
                 <p class="card-text">
-                    Vytvoření nových bankovních účtů, správa měn, správa existujících bankovních účtů
+                    Vytvoření nových bankovních účtů, správa měn, možnost smazat existující bankovní účty
                 </p>
             </div>
         </a>
