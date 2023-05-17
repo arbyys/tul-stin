@@ -19,9 +19,11 @@ class PaymentController extends Controller
     {
         CurrencyService::updateExchangeRates();
         $currencies = Currency::all()->sortBy("code");
+        $dateUpdated = Currency::find("CZK")->updated_at;
 
         return view('pages.incoming-payment', [
             "currencies" => $currencies,
+            "dateUpdated" => $dateUpdated,
         ]);
     }
 
@@ -29,9 +31,11 @@ class PaymentController extends Controller
     {
         CurrencyService::updateExchangeRates();
         $currencies = Currency::all()->sortBy("code");
+        $dateUpdated = Currency::find("CZK")->updated_at;
 
         return view('pages.outcoming-payment', [
             "currencies" => $currencies,
+            "dateUpdated" => $dateUpdated,
         ]);
     }
 

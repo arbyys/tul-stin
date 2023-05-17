@@ -23,7 +23,8 @@
         </form>
     </div>
     <hr>
-    <h3 class="mb-3">Aktuální kurzovní lístek</h3>
+    <h3>Aktuální kurzovní lístek</h3>
+    <h6 class="mb-3">poslední aktualizace - {{ date_format(date_create($dateUpdated),"d.m.Y") }}</h6>
     <table class="table responsive-50 table-secondary table-striped">
         <thead>
         <tr>
