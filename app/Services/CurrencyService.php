@@ -31,10 +31,10 @@ class CurrencyService
         if(!$bypassDates) {
             $date1 = Carbon::parse($currencyCZK->updated_at);
             $currentDateTime = Carbon::now();
+
             $isOlderThanCached = $currentDateTime->diffInDays($date1) >= 1;
             $isWeekday = $currentDateTime->isWeekday();
             $isAfterReleaseDate = $currentDateTime->hour > 14 || ($currentDateTime->hour == 14 && $currentDateTime->minute >= 31);
-
         }
 
         if ($bypassDates || ($isOlderThanCached && $isWeekday && $isAfterReleaseDate)) {
@@ -62,15 +62,11 @@ class CurrencyService
                     {
                         continue;
                     }
-                    $currency = [
-                        'country' => $row['země'],
-                        'currency' => $row['měna'],
-                        'quantity' => $row['množství'],
-                        'code' => $row['kód'],
-                        'rate' => str_replace(',', '.', $row['kurz']),
-                    ];
-
-                    $currency = new Currency();
+                    $currency = Currency::find($row['kód']);
+                    if (!$currency)
+                    {
+                        $currency = new Currency();
+                    }
 
                     $rateReplaced = floatval(str_replace(',', '.', $row['kurz']));
                     $rateCalculated = $rateReplaced / intval($row['množství']);
@@ -83,9 +79,6 @@ class CurrencyService
                     $currency->save();
                 }
             }
-        }
-        else {
-            echo "fail1";
         }
     }
 }

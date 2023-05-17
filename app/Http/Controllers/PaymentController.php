@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Account;
 use App\Models\Currency;
+use App\Services\CurrencyService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -16,19 +17,25 @@ class PaymentController extends Controller
 
     public function indexIncoming()
     {
-        $currencies = Currency::all();
+        CurrencyService::updateExchangeRates();
+        $currencies = Currency::all()->sortBy("code");
+        $dateUpdated = Currency::find("CZK")->updated_at;
 
         return view('pages.incoming-payment', [
             "currencies" => $currencies,
+            "dateUpdated" => $dateUpdated,
         ]);
     }
 
     public function indexOutcoming()
     {
-        $currencies = Currency::all();
+        CurrencyService::updateExchangeRates();
+        $currencies = Currency::all()->sortBy("code");
+        $dateUpdated = Currency::find("CZK")->updated_at;
 
         return view('pages.outcoming-payment', [
             "currencies" => $currencies,
+            "dateUpdated" => $dateUpdated,
         ]);
     }
 
@@ -40,6 +47,8 @@ class PaymentController extends Controller
 
         $currency = $validatedData["currency"];
         $amount = $validatedData["amount"];
+
+        CurrencyService::updateExchangeRates();
 
         if (!Auth::user()->hasAccount("CZK"))
         {
@@ -99,6 +108,8 @@ class PaymentController extends Controller
 
         $currency = $validatedData["currency"];
         $amount = $validatedData["amount"];
+
+        CurrencyService::updateExchangeRates();
 
         if (!Auth::user()->hasAccount("CZK"))
         {

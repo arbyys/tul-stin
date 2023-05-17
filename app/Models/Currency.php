@@ -24,7 +24,8 @@ class Currency extends Model
         $currencyModel = self::where('code', $currency)->first();
         if ($currencyModel && $currency != "CZK")
         {
-            return $amount * $currencyModel->rate;
+            //dd(floatval($amount), floatval($currencyModel->rate), floatval($amount) * floatval($currencyModel->rate));
+            return floatval($amount) * floatval($currencyModel->rate);
         }
 
         return null;
