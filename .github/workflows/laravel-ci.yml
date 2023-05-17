@@ -36,6 +36,12 @@ jobs:
           mkdir -p database
           touch database/database.sqlite
 
+      - name: Run migrations
+        run: php artisan migrate --force
+
+      - name: Run npm
+        run: npm run dev
+
       - name: Run tests
         env:
           DB_CONNECTION: sqlite
