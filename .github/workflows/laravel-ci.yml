@@ -41,11 +41,8 @@ jobs:
       - name: Run npm
         run: npm run build
 
-      - name: Migrate DB
-        env:
-          DB_CONNECTION: sqlite
-          DB_DATABASE: database/database.sqlite
-        run: php artisan migrate
+      - name: Run migrations
+        run: php artisan migrate --force
 
       - name: Run tests
         env:
