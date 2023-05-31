@@ -137,6 +137,26 @@ class PaymentController extends Controller
                 ]);
             }
         }
+        elseif (Auth::user()->hasAccountAndEnoughMoney($currency, $amount, true))
+        {
+            $account = Account::where("user_id", Auth::id())
+                ->where("currency_code", $currency)
+                ->first();
+            $result = $account->makePayment(-$amount);
+            $result2 = $account->applyInterest();
+            if ($result && $result2)
+            {
+                return redirect()->back()->with([
+                    "success" => "Platba úspěšně zpracována v měně {$currency} za použití kontokorentu"
+                ]);
+            }
+            else
+            {
+                return redirect()->back()->withErrors([
+                    "msg" => "Při platbě se vyskytla neznámá chyba."
+                ]);
+            }
+        }
         else
         {
             if ($currency == "CZK")
@@ -157,6 +177,26 @@ class PaymentController extends Controller
                 {
                     return redirect()->back()->with([
                         "success" => "Váš účet s měnou {$currency} neexistuje / nemá dost prostředků. Částa byla konvertována a platba bylo provedna z vašeho účet s měnou CZK."
+                    ]);
+                }
+                else
+                {
+                    return redirect()->back()->withErrors([
+                        "msg" => "Při platbě se vyskytla neznámá chyba."
+                    ]);
+                }
+            }
+            elseif (!is_null($convertedAmount) && Auth::user()->hasAccountAndEnoughMoney("CZK", $convertedAmount, true))
+            {
+                $account = Account::where("user_id", Auth::id())
+                    ->where("currency_code", "CZK")
+                    ->first();
+                $result = $account->makePayment(-$convertedAmount);
+                $result2 = $account->applyInterest();
+                if ($result && $result2)
+                {
+                    return redirect()->back()->with([
+                        "success" => "Váš účet s měnou {$currency} neexistuje / nemá dost prostředků. Částa byla konvertována a platba bylo provedna z vašeho účet s měnou CZK za použití kontokorentu."
                     ]);
                 }
                 else

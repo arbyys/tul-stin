@@ -58,8 +58,15 @@ class User extends Authenticatable
         );
     }
 
-    public function hasAccountAndEnoughMoney($currencyCode, $amount): bool
+    public function hasAccountAndEnoughMoney($currencyCode, $amount, $overdraft=false): bool
     {
+        if ($overdraft)
+        {
+            $bal = Account::where("user_id", $this->id)
+                    ->where("currency_code", $currencyCode)
+                    ->first()->balance;
+            return $amount < ($bal + $bal*0.1);
+        }
         return Account::where("user_id", $this->id)
                       ->where("currency_code", $currencyCode)
                       ->where("balance", ">=", $amount)
