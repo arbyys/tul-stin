@@ -11,6 +11,46 @@ use Tests\TestCase;
 
 class PaymentTest extends TestCase
 {
+
+    public function test_outcoming_payment_overdraft()
+    {
+        $user = User::factory()->create();
+        $currencyCZK = Currency::factory()->create([
+            'code' => 'CZK',
+            'rate' => null
+        ]);
+        $account = Account::factory()->create([
+            'user_id' => $user->id,
+            'currency_code' => $currencyCZK->code,
+        ]);
+
+        $response = $this->actingAs($user)->post('/incoming-payment/new', [
+            'amount' => 1000,
+            'currency' => $currencyCZK->code,
+        ]);
+
+        $response->assertSessionDoesntHaveErrors();
+
+        $this->assertDatabaseHas('payments', [
+            'account_iban' => $account->iban,
+            'amount' => 1000,
+        ]);
+
+        $response = $this->actingAs($user)->post('/outcoming-payment/new', [
+            'amount' => 1090,
+            'currency' => $currencyCZK->code,
+        ]);
+
+
+        $this->assertDatabaseHas('accounts', [
+            'iban' => $account->iban,
+            'balance' => -99,
+        ]);
+
+        $response->assertSessionDoesntHaveErrors();
+
+    }
+
     public function test_incoming_payment_czk()
     {
         $user = User::factory()->create();
@@ -134,6 +174,57 @@ class PaymentTest extends TestCase
         ]);
 
         $response->assertSessionDoesntHaveErrors();
+
+    }
+
+    public function test_outcoming_payment_convert_czk()
+    {
+        $user = User::factory()->create();
+        $currencyCZK = Currency::factory()->create([
+            'code' => 'CZK',
+            'rate' => null
+        ]);
+        $account = Account::factory()->create([
+            'user_id' => $user->id,
+            'currency_code' => $currencyCZK->code,
+        ]);
+
+        $response = $this->actingAs($user)->post('/incoming-payment/new', [
+            'amount' => 1000,
+            'currency' => $currencyCZK->code,
+        ]);
+
+        $response->assertSessionDoesntHaveErrors();
+
+        $this->assertDatabaseHas('payments', [
+            'account_iban' => $account->iban,
+            'amount' => 1000,
+        ]);
+
+        $response = $this->actingAs($user)->post('/outcoming-payment/new', [
+            'amount' => 100000,
+            'currency' => $currencyCZK->code,
+        ]);
+
+        $response->assertSessionHasErrors();
+
+    }
+
+    public function test_outcoming_payment_no_czk_account()
+    {
+        $user = User::factory()->create();
+        $currency = Currency::factory()->create();
+        $account = Account::factory()->create([
+            'user_id' => $user->id,
+            'currency_code' => $currency->code,
+        ]);
+
+        $response = $this->actingAs($user)->post('/incoming-payment/new', [
+            'amount' => 1000,
+            'currency' => $currency->code,
+        ]);
+
+        $response->assertSessionHasErrors();
 
     }
 }

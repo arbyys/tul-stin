@@ -41,4 +41,11 @@ class Account extends Model
         ]);
         return $result && $payment->save();
     }
+
+    public function applyInterest() {
+        $balance = $this->attributes['balance'];
+        $interest = abs($balance) * 0.1;
+
+        return $this->makePayment(-$interest);
+    }
 }

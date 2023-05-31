@@ -25,7 +25,7 @@ class AccountFactory extends Factory
         return [
             'user_id' => $user->id,
             'currency_code' => $currency->code,
-            'balance' => fake()->numberBetween(1000, 100000),
+            'balance' => 0
         ];
     }
 }
