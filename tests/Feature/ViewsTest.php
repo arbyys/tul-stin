@@ -86,7 +86,11 @@ class ViewsTest extends TestCase
         $user = User::factory()->create();
         $currencyCZK = Currency::factory()->create([
             'code' => 'CZK',
-            'rate' => null
+            'rate' => null,
+        ]);
+        $currency = Currency::factory()->create([
+            'code' => 'EUR',
+            'rate' => null,
         ]);
 
         $response = $this->actingAs($user)->get('/outcoming-payment');
@@ -94,8 +98,8 @@ class ViewsTest extends TestCase
         $response->assertStatus(200);
         $response->assertViewIs('pages.outcoming-payment');
 
-        $response->assertViewHas('currencies', function ($currencies) use ($currencyCZK) {
-            return $currencies->contains($currencyCZK);
+        $response->assertViewHas('currencies', function ($currencies) use ($currency) {
+            return $currencies->contains($currency);
         });
         $response->assertViewHas('dateUpdated', function ($date) {
             return $date !== null;
@@ -109,14 +113,18 @@ class ViewsTest extends TestCase
             'code' => 'CZK',
             'rate' => null
         ]);
+        $currency = Currency::factory()->create([
+            'code' => 'EUR',
+            'rate' => null,
+        ]);
 
         $response = $this->actingAs($user)->get('/incoming-payment');
 
         $response->assertStatus(200);
         $response->assertViewIs('pages.incoming-payment');
 
-        $response->assertViewHas('currencies', function ($currencies) use ($currencyCZK) {
-            return $currencies->contains($currencyCZK);
+        $response->assertViewHas('currencies', function ($currencies) use ($currency) {
+            return $currencies->contains($currency);
         });
         $response->assertViewHas('dateUpdated', function ($date) {
             return $date !== null;
